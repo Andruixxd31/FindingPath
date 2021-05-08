@@ -1,13 +1,13 @@
 public class Node{
 
-    int transitionCost; //Cost to go the node
-    int hCost; //hueristic cost
-    int gCost; //Cost from origin
-    int fCost; //sum of g and h
-    Node up; //Reference to the neighboring nodes
-    Node down;
-    Node left;
-    Node right;
+    private int transitionCost; //Cost to go the node
+    private int hCost; //hueristic cost
+    private int gCost; //Cost from origin
+    private int fCost; //sum of g and h
+    private Node up; //Reference to the neighboring nodes
+    private Node down;
+    private Node left;
+    private Node right;
 
     public Node(int transitionCost){
         this(transitionCost, null, null, null, null);
