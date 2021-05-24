@@ -106,30 +106,23 @@ public class Grid extends JPanel implements ActionListener, MouseListener, Mouse
     public void MapCalculations(MouseEvent e) {
 		// If left mouse button is clicked
 		if (SwingUtilities.isLeftMouseButton(e)) {
-            
+            int xRollover = e.getX() % size;
+            int yRollover = e.getY() % size;
 			// If 's' is pressed create start node
 			if (currentKey == 's') {
-				int xRollover = e.getX() % size;
-				int yRollover = e.getY() % size;
-
 				if (startNode == null) {
 					startNode = new Node(e.getX() - xRollover, e.getY() - yRollover);
 				} else {
 					startNode.setXY(e.getX() - xRollover, e.getY() - yRollover);
 				}
-				repaint();
 			} 
 			// If 'e' is pressed create end node
 			else if (currentKey == 'e') {
-				int xRollover = e.getX() % size;
-				int yRollover = e.getY() % size;
-
 				if (endNode == null) {
 					endNode = new Node(e.getX() - xRollover, e.getY() - yRollover);
 				} else {
 					endNode.setXY(e.getX() - xRollover, e.getY() - yRollover);
 				}
-				repaint();
 			} 
 			// Otherwise, create a wall
 			else {
@@ -138,8 +131,8 @@ public class Grid extends JPanel implements ActionListener, MouseListener, Mouse
 
 				Node newBorder = new Node(xBorder, yBorder);
 				pathFinder.addBorder(newBorder);
-				repaint();
 			}
+            repaint();
 		} 
 		// If right mouse button is clicked
 		else if (SwingUtilities.isRightMouseButton(e)){

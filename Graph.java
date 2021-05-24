@@ -3,25 +3,24 @@ import java.util.Hashtable;
 
 public class Graph{
 
-    private Node[][] matrix;
+    private int[][] matrix;
     private int size;
     private String[] vertexName;
     private Hashtable<String,Integer> vertexPos;
 
     public Graph(int capacity){
         this.size = 0;
-        this.matrix = new Node[capacity][capacity];
+        this.matrix = new int[capacity][capacity];
         this.vertexName = new String[capacity];
         this.vertexPos = new Hashtable<String,Integer>();
     }
 
     public Graph() {
-        this(5); //15 x 15 grid
+        this(4); //Numero de nodos unicos. La matrix es de nxn
     }
 
     
     public void addVertex(String name){ 
-        // System.out.println("name:" + name);
         this.vertexName[this.size] = name; 
         this.vertexPos.put(name, this.size++);
     }
@@ -36,16 +35,10 @@ public class Graph{
     }
 
     public void addAllEdges(int weight){
-        //initialiizes all the Nodes in the matrix
-        for(int i = 0; i < Math.sqrt(this.matrix.length); i++){
-            for(int j = 0; j < Math.sqrt(this.matrix.length); j++){
-                this.matrix[i][j] = new Node(weight);
-            }
-        }
 
         //Make all the connections
-        for(int i = 0; i < Math.sqrt(this.matrix.length); i++){
-            for(int j = 0; j < Math.sqrt(this.matrix.length); j++){
+        for(int i = 0; i < this.matrix.length; i++){
+            for(int j = 0; j < this.matrix.length; j++){
                 //Checks if there are neighbours presents
                 String currentPos = i + "," + j;
                 if(j != 0){ //left
@@ -64,6 +57,7 @@ public class Graph{
                     String neighbourPos = (i + 1) + "," + j;
                     addEdge(currentPos, neighbourPos, this.matrix[i][j]);
                 }
+
             }
         }
 
@@ -77,19 +71,24 @@ public class Graph{
     }
 
 
-    public void addEdge(String origin, String destiny, Node value){
+    public void addEdge(String origin, String destiny, int value){
         this.matrix[this.vertexPos.get(origin)][this.vertexPos.get(destiny)] = value;
     }
 
-    public void addEdgeND(String origin, String destiny, Node value){
+    public void addEdgeND(String origin, String destiny, int value){
         this.matrix[this.vertexPos.get(origin)][this.vertexPos.get(destiny)] = value;
         this.matrix[this.vertexPos.get(destiny)][this.vertexPos.get(origin)] = value;
+    }
+
+
+    //checara las adyencencias y los que tengan un valor las unira con setDir
+    public void scanMatrix(){
+        // this.vertexPos.get(origin).setLeft(this.vertexPos.get(destiny))
     }
 
     public static void main(String[] args) {
         Graph gr = new Graph();
         gr.addAllVertexes();
-        gr.addAllEdges(10);
-
+        // gr.addAllEdges(10);
     }
 }
