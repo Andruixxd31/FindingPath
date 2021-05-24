@@ -1,6 +1,5 @@
 public class Node{
 
-    private int transitionCost; //Cost to go the node
     private int x;
     private int y;
     private int h; //hueristic cost
@@ -12,14 +11,6 @@ public class Node{
 		this.x = x;
 		this.y = y;
 	}
-
-    public int getTransitionCost(){
-        return this.transitionCost;
-    }
-
-    public void setTransitionCost(int transitionCost){
-        this.transitionCost = transitionCost;
-    }
 
     public int getX() {
 		return x;
@@ -77,10 +68,10 @@ public class Node{
 		return false;
 	}
 
-    @Override
-    public String toString() {
-        return this.transitionCost + "";
-    }
+    // @Override
+    // public String toString() {
+
+    // }
 
 
 }
