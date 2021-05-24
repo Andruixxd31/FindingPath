@@ -43,6 +43,8 @@ public class Grid extends JPanel implements ActionListener, MouseListener, Mouse
 
         //Setting variables
         this.size = 25;
+        this.startNode = new Node(25,25);
+        this.endNode = new Node(400,400);
 
 
         //Making the frame dimensions
@@ -57,7 +59,7 @@ public class Grid extends JPanel implements ActionListener, MouseListener, Mouse
 		frame.setVisible(true); 
 
         //classes used
-        pathFinder = new PathFinder();
+        pathFinder = new PathFinder(this);
 
         this.repaint();
     }
@@ -91,11 +93,19 @@ public class Grid extends JPanel implements ActionListener, MouseListener, Mouse
         }
 
         //If there is path draw path
+        g.setColor(Color.cyan);
+        for(int i = 0; i < pathFinder.getPathList().size(); i++){
+            g.fillRect(pathFinder.getPathList().get(i).getX() + 1, pathFinder.getPathList().get(i).getY() + 1, size - 1, size - 1);
+        }
 
         //Draw closed Nodes
 
         //Draw open Nodes
 
+    }
+
+    public void runPathFinder(){
+        this.pathFinder.runProgram(startNode, endNode);
     }
 
     public void drawNodeInfo(Node current, Graphics g){
@@ -132,7 +142,6 @@ public class Grid extends JPanel implements ActionListener, MouseListener, Mouse
 				Node newBorder = new Node(xBorder, yBorder);
 				pathFinder.addBorder(newBorder);
 			}
-            repaint();
 		} 
 		// If right mouse button is clicked
 		else if (SwingUtilities.isRightMouseButton(e)){
@@ -144,17 +153,22 @@ public class Grid extends JPanel implements ActionListener, MouseListener, Mouse
 				if (Location != -1) {
 					pathFinder.removeBorder(Location);
 				}
-				repaint();
         }
+        repaint();
 	}
 
 
-    
+    public int getBlockSize(){
+        return this.size;
+    }
 
     @Override
     public void keyPressed(KeyEvent e) {
         char key = e.getKeyChar();
 		currentKey = key;
+        if(e.getKeyCode() == KeyEvent.VK_ENTER){
+            this.runPathFinder();
+        }
     }
 
     @Override
