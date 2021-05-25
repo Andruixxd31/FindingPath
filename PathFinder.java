@@ -23,7 +23,7 @@ public class PathFinder {
         this.gHeight = grid.getHeight();
 
         this.borders = new ArrayList<Node>();
-        this.opened = new ArrayList<Node>();
+        this.closed = new ArrayList<Node>();
         this.closed = new ArrayList<Node>();
         this.path = new ArrayList<Node>();
     }
@@ -42,7 +42,7 @@ public class PathFinder {
                     continue;
                 }
                 int neighborXPos = dragX + current.getX();
-                int neighborYPos = dragX + current.getY();
+                int neighborYPos = dragY + current.getY();
 
                 //Nodes that are inside of the coordinates
                 if(neighborXPos >= 0 && neighborXPos <= this.gWidth && 
@@ -56,6 +56,11 @@ public class PathFinder {
         }
     }
 
+    public void calculateMove(int xPos, int yPos){
+
+    }
+
+
     public void addBorder(Node border){
         borders.add(border);
     }
@@ -68,23 +73,68 @@ public class PathFinder {
         return this.borders;
     }
 
-    public Node getBorder(int index){
-        return borders.get(index);
-    }
-
-    public int searchBorder(int xSearch, int ySearch) {
-		int Location = -1;
-
+    public int searchBorder(int xPos, int yPos) {
+		int index = -1;
 		for (int i = 0; i < borders.size(); i++) {
-			if (borders.get(i).getX() == xSearch && borders.get(i).getY() == ySearch) {
-				Location = i;
+			if (borders.get(i).getX() == xPos && borders.get(i).getY() == xPos) {
+				index = i;
 				break;
 			}
 		}
-		return Location;
+		return index;
 	}   
+
+    public void addPath(Node node){
+        this.path.add(node);
+    }
     
     public ArrayList<Node> getPathList(){
         return this.path;
+    }
+
+    public void addOpen(Node node){
+        this.opened.add(node);
+    }
+
+    public void removeOpen(int index){
+        this.opened.remove(index);
+    }
+
+    public ArrayList<Node> getOpened(){
+        return this.opened;
+    }
+
+    public int searchOpenedNode(int xPos, int yPos){
+        int index = -1;
+		for (int i = 0; i < opened.size(); i++) {
+			if (opened.get(i).getX() == xPos && opened.get(i).getY() == yPos) {
+				index = i;
+				break;
+			}
+		}
+		return index;
+    }
+
+    public void addClosed(Node node) {
+        this.closed.add(node);
+    }
+
+    public void removeClosed(int index) {
+        this.closed.remove(index);
+    }
+
+    public ArrayList<Node> getClosed(){
+        return this.closed;
+    }
+
+    public int searchClosedNode(int xPos, int yPos){
+        int index = -1;
+		for (int i = 0; i < closed.size(); i++) {
+			if (closed.get(i).getX() == xPos && closed.get(i).getY() == yPos) {
+				index = i;
+				break;
+			}
+		}
+		return index;
     }
 }
