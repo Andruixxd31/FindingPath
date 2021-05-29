@@ -138,7 +138,6 @@ public class Grid extends JPanel implements ActionListener, MouseListener, Mouse
 			else {
 				int xBorder = e.getX() - (e.getX() % size);
 				int yBorder = e.getY() - (e.getY() % size);
-
 				Node newBorder = new Node(xBorder, yBorder);
 				pathFinder.addBorder(newBorder);
 			}
@@ -149,10 +148,10 @@ public class Grid extends JPanel implements ActionListener, MouseListener, Mouse
 			int mouseBoxY = e.getY() - (e.getY() % size);
 
 			//remove wall
-				int Location = pathFinder.searchBorder(mouseBoxX, mouseBoxY);
-				if (Location != -1) {
-					pathFinder.removeBorder(Location);
-				}
+            int Location = pathFinder.searchBorder(mouseBoxX, mouseBoxY);
+            if (Location != -1) {
+                pathFinder.removeBorder(Location);
+            }
         }
         repaint();
 	}
