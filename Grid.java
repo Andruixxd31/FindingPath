@@ -61,11 +61,13 @@ public class Grid extends JPanel implements ActionListener, MouseListener, Mouse
         //classes used
         pathFinder = new PathFinder(this);
 
+        this.revalidate();
         this.repaint();
     }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
+        // System.out.println("Called");
 
 
 
@@ -92,16 +94,25 @@ public class Grid extends JPanel implements ActionListener, MouseListener, Mouse
             g.fillRect(pathFinder.getBorderList().get(i).getX() + 1, pathFinder.getBorderList().get(i).getY() + 1, size - 1, size - 1);
         }
 
+        //Draw open Nodes
+        g.setColor(style.redHighlight);
+        for(int i = 0; i < pathFinder.getOpened().size(); i++){
+            g.fillRect(pathFinder.getOpened().get(i).getX() + 1, pathFinder.getOpened().get(i).getY() + 1, size - 1, size - 1);
+            // drawNodeInfo(pathFinder.getOpened().get(i), g);
+        }
+
+        //Draw closed Nodes
+        g.setColor(style.greenHighlight);
+        for(int i = 0; i < pathFinder.getClosed().size(); i++){
+            g.fillRect(pathFinder.getClosed().get(i).getX() + 1, pathFinder.getClosed().get(i).getY() + 1, size - 1, size - 1);
+            // drawNodeInfo(pathFinder.getClosed().get(i), g);
+        }
+
         //If there is path draw path
         g.setColor(Color.cyan);
         for(int i = 0; i < pathFinder.getPathList().size(); i++){
             g.fillRect(pathFinder.getPathList().get(i).getX() + 1, pathFinder.getPathList().get(i).getY() + 1, size - 1, size - 1);
         }
-
-        //Draw closed Nodes
-
-        //Draw open Nodes
-
     }
 
     public void runPathFinder(){
@@ -109,7 +120,12 @@ public class Grid extends JPanel implements ActionListener, MouseListener, Mouse
     }
 
     public void drawNodeInfo(Node current, Graphics g){
-
+        g.setFont(style.numbers);
+			g.setColor(Color.black);
+			g.drawString(Integer.toString(current.getF()), current.getX() + 4, current.getY() + 16);
+			g.setFont(style.smallNumbers);
+			g.drawString(Integer.toString(current.getG()), current.getX() + 4, current.getY() + size - 7);
+			g.drawString(Integer.toString(current.getH()), current.getX() + size - 26, current.getY() + size - 7);
     }
 
 
@@ -171,56 +187,40 @@ public class Grid extends JPanel implements ActionListener, MouseListener, Mouse
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
 	public void mouseClicked(MouseEvent e) {
 		MapCalculations(e);
 	}
 
     @Override
+    public void keyReleased(KeyEvent e) {
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {        
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+    }
+
+    @Override
     public void mousePressed(MouseEvent e) {
-        // TODO Auto-generated method stub
-        
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        // TODO Auto-generated method stub
-        
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        // TODO Auto-generated method stub
-        
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        // TODO Auto-generated method stub
-        
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-        
     }
 
     @Override
