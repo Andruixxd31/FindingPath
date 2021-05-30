@@ -13,10 +13,8 @@ public class PathFinder {
                             path;
     private Node startNode, 
                  endNode, 
-                 exploredNode,
-                 parent;
-    private boolean pathFound, 
-                    pathNotFound;
+                 exploredNode;
+    private boolean pathFound;
 
     public PathFinder(Grid grid){
         this.grid = grid;
@@ -33,7 +31,6 @@ public class PathFinder {
     public void runProgram(Node startNode, Node endNode){
         if(startNode != null && endNode != null){
             this.startNode = startNode;
-            this.parent = startNode;
             this.endNode = endNode;
             this.findPath(startNode);
         }
@@ -62,7 +59,8 @@ public class PathFinder {
             //Check if exploredNode is the final Node
             if(Node.isEqual(this.exploredNode, this.endNode)){
                 this.pathFound = true;
-                this.showPath(exploredNode);
+                this.endNode.setParent(exploredNode);
+                this.showPath();
             }
             
             //For loops to create adyacent nodes if there are inside the grid
@@ -98,12 +96,13 @@ public class PathFinder {
                             neighbourNode.setF(gCost + hCost); 
                             neighbourNode.setParent(this.exploredNode);
                             //Parents
-                            System.out.println(exploredNode.getX() + "-" +exploredNode.getY() + " is parent of " +
-                                                neighbourNode.getX() + "-" +neighbourNode.getY());
                             this.opened.add(neighbourNode);
                         }else{
                             if(this.exploredNode.getF() < this.opened.get(searchOpenedNode(neighbourXPos, neighbourYPos)).getG()){
-                                System.out.println("Yei");
+                                //exploredNode will be parent of already created Node
+                                //Calcular de nuevo g y f
+                                //Checar si esta en cerrado
+                                    //removerlo de cerrado y pasarlo a open
                             }
                             //Check if neighbour node f is less or equal than g
                             //if it is open the node again and set as parent of it
@@ -117,18 +116,17 @@ public class PathFinder {
         }
     }
 
-    public void showPath(Node lastNode){
-        Node n = lastNode;
-
-        if(n == null){
+    public void showPath(){
+        Node childNode = endNode;
+        if(childNode == null){
             return;
         }
 
-        while(n.getParent() != null){
-            path.add(n);
-            n = n.getParent();
+        while(childNode.getParent() != null){
+            path.add(childNode);
+            childNode = childNode.getParent();
         }
-        path.add(n);
+        path.add(childNode);
     }
 
     public boolean calculateMove(int xPos, int yPos){

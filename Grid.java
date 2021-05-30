@@ -9,14 +9,12 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
-import javax.swing.JFrame;
 
 public class Grid extends JPanel implements ActionListener, MouseListener, MouseMotionListener, KeyListener {
 
@@ -27,6 +25,7 @@ public class Grid extends JPanel implements ActionListener, MouseListener, Mouse
     private PathFinder pathFinder;
 
     char currentKey = (char) 0;
+    Random random;
 
     public static void main(String[] args) {
 		new Grid();
@@ -43,6 +42,7 @@ public class Grid extends JPanel implements ActionListener, MouseListener, Mouse
 
         //Setting variables
         this.size = 25;
+        random = new Random();
         this.startNode = new Node(25,25);
         this.endNode = new Node(400,400);
 
@@ -68,8 +68,6 @@ public class Grid extends JPanel implements ActionListener, MouseListener, Mouse
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         // System.out.println("Called");
-
-
 
         //Draw the grid
         g.setColor(Color.lightGray);
@@ -101,19 +99,20 @@ public class Grid extends JPanel implements ActionListener, MouseListener, Mouse
             // drawNodeInfo(pathFinder.getOpened().get(i), g);
         }
 
-        //Todo Check that the nodes are not the start and end Node
-
         //Draw closed Nodes
         g.setColor(style.greenHighlight);
         for(int i = 0; i < pathFinder.getClosed().size(); i++){
-            g.fillRect(pathFinder.getClosed().get(i).getX() + 1, pathFinder.getClosed().get(i).getY() + 1, size - 1, size - 1);
-            // drawNodeInfo(pathFinder.getClosed().get(i), g);
+            if(isPosNode(pathFinder.getClosed().get(i))){
+                g.fillRect(pathFinder.getClosed().get(i).getX() + 1, pathFinder.getClosed().get(i).getY() + 1, size - 1, size - 1);
+            }
         }
 
         //If there is path draw path
         g.setColor(Color.cyan);
         for(int i = 0; i < pathFinder.getPathList().size(); i++){
-            g.fillRect(pathFinder.getPathList().get(i).getX() + 1, pathFinder.getPathList().get(i).getY() + 1, size - 1, size - 1);
+            if(isPosNode(pathFinder.getPathList().get(i))){
+                g.fillRect(pathFinder.getPathList().get(i).getX() + 1, pathFinder.getPathList().get(i).getY() + 1, size - 1, size - 1);
+            }
         }
     }
 
@@ -174,9 +173,30 @@ public class Grid extends JPanel implements ActionListener, MouseListener, Mouse
         repaint();
 	}
 
+    public ArrayList<Node> case1(){  
+        for(int i=0;i<this.size;i++) {
+            int x=(int)(random.nextDouble() * this.getWidth());
+            int y=(int)(random.nextDouble() * this.getHeight());    
+            int xBorder = x - (x % size);
+            int yBorder = y - (y % size);			 
+            if(xBorder!=startNode.getX() && yBorder!=startNode.getY() && xBorder!=endNode.getX() && yBorder!=endNode.getY()){
+                pathFinder.addBorder(new Node(xBorder,yBorder));      
+            }      	
+        }
+        repaint();
+		return pathFinder.getBorderList();
+    }
+        
 
     public int getBlockSize(){
         return this.size;
+    }
+
+    public boolean isPosNode(Node node){
+        if(node != this.startNode && node != this.endNode){
+            return true;
+        }
+        return false;
     }
 
     public void clearGrid(){
@@ -206,6 +226,8 @@ public class Grid extends JPanel implements ActionListener, MouseListener, Mouse
             this.runPathFinder();
         }else if(currentKey == 'r') {
             this.clearGrid();
+        }else if(currentKey == '1') {
+            this.case1();
         }
     }
 
