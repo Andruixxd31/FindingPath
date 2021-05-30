@@ -101,6 +101,8 @@ public class Grid extends JPanel implements ActionListener, MouseListener, Mouse
             // drawNodeInfo(pathFinder.getOpened().get(i), g);
         }
 
+        //Todo Check that the nodes are not the start and end Node
+
         //Draw closed Nodes
         g.setColor(style.greenHighlight);
         for(int i = 0; i < pathFinder.getClosed().size(); i++){
@@ -177,12 +179,33 @@ public class Grid extends JPanel implements ActionListener, MouseListener, Mouse
         return this.size;
     }
 
+    public void clearGrid(){
+        startNode=null;
+        endNode=null;      
+        if(!pathFinder.getBorderList().isEmpty()) {
+            pathFinder.getBorderList().clear();
+        }
+        if(pathFinder.getClosed().size()!=0) {
+            pathFinder.getClosed().clear();
+        }
+        if(pathFinder.getOpened().size()!=0) {
+            pathFinder.getOpened().clear();
+        }
+        if(pathFinder.getPathList().size()!=0) {
+            pathFinder.getPathList().clear();
+        }
+        pathFinder.setPathFound(false);
+        repaint();
+    }
+
     @Override
     public void keyPressed(KeyEvent e) {
         char key = e.getKeyChar();
 		currentKey = key;
         if(e.getKeyCode() == KeyEvent.VK_ENTER){
             this.runPathFinder();
+        }else if(currentKey == 'r') {
+            this.clearGrid();
         }
     }
 
@@ -192,39 +215,30 @@ public class Grid extends JPanel implements ActionListener, MouseListener, Mouse
 	}
 
     @Override
-    public void keyReleased(KeyEvent e) {
-    }
+    public void keyReleased(KeyEvent e) {}
 
     @Override
-    public void mouseDragged(MouseEvent e) {        
-    }
+    public void mouseDragged(MouseEvent e) {}
 
     @Override
-    public void mouseMoved(MouseEvent e) {
-    }
+    public void mouseMoved(MouseEvent e) {}
 
     @Override
-    public void mousePressed(MouseEvent e) {
-    }
+    public void mousePressed(MouseEvent e) {}
 
     @Override
-    public void mouseReleased(MouseEvent e) {
-    }
+    public void mouseReleased(MouseEvent e) {}
 
     @Override
-    public void mouseEntered(MouseEvent e) {
-    }
+    public void mouseEntered(MouseEvent e) {}
 
     @Override
-    public void mouseExited(MouseEvent e) {
-    }
+    public void mouseExited(MouseEvent e) {}
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-    }
+    public void actionPerformed(ActionEvent e) {}
 
     @Override
-    public void keyTyped(KeyEvent e) {
-    }
+    public void keyTyped(KeyEvent e) {}
     
 }

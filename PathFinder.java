@@ -33,6 +33,7 @@ public class PathFinder {
     public void runProgram(Node startNode, Node endNode){
         if(startNode != null && endNode != null){
             this.startNode = startNode;
+            this.parent = startNode;
             this.endNode = endNode;
             this.findPath(startNode);
         }
@@ -61,6 +62,7 @@ public class PathFinder {
             //Check if exploredNode is the final Node
             if(Node.isEqual(this.exploredNode, this.endNode)){
                 this.pathFound = true;
+                this.showPath(exploredNode);
             }
             
             //For loops to create adyacent nodes if there are inside the grid
@@ -79,22 +81,35 @@ public class PathFinder {
                         Check if its on opened
                         calculate costs
                         */
+                        if(searchOpenedNode(neighbourXPos, neighbourYPos) == -1){
+                            //Create a new node
+                            Node neighbourNode = new Node(neighbourXPos, neighbourYPos);
 
-                        //Create a new node
-                        Node neighbourNode = new Node(neighbourXPos, neighbourYPos);
-
-                        //g cost acumulating distance from parent Node
-                        int gCostX = Math.abs(neighbourNode.getX() - this.exploredNode.getX());
-                        int gCostY = Math.abs(neighbourNode.getY() - this.exploredNode.getY());
-                        int gCost = gCostX + gCostY;
-                        neighbourNode.setG(gCost);
-                        //obtaning heuristic cost using Manhattan Distance
-                        int hCost = Math.abs(neighbourNode.getX() - this.endNode.getX()) + 
-                                    Math.abs(neighbourNode.getY() - this.endNode.getY());
-                        neighbourNode.setH(hCost);
-                        //fcost
-                        neighbourNode.setF(gCost + hCost); 
-                        this.opened.add(neighbourNode);
+                            //g cost acumulating distance from parent Node
+                            int gCostX = Math.abs(neighbourNode.getX() - this.exploredNode.getX());
+                            int gCostY = Math.abs(neighbourNode.getY() - this.exploredNode.getY());
+                            int gCost = gCostX + gCostY + this.exploredNode.getG();
+                            neighbourNode.setG(gCost);
+                            //obtaning heuristic cost using Manhattan Distance
+                            int hCost = Math.abs(neighbourNode.getX() - this.endNode.getX()) + 
+                                        Math.abs(neighbourNode.getY() - this.endNode.getY());
+                            neighbourNode.setH(hCost);
+                            //fcost
+                            neighbourNode.setF(gCost + hCost); 
+                            neighbourNode.setParent(this.exploredNode);
+                            //Parents
+                            System.out.println(exploredNode.getX() + "-" +exploredNode.getY() + " is parent of " +
+                                                neighbourNode.getX() + "-" +neighbourNode.getY());
+                            this.opened.add(neighbourNode);
+                        }else{
+                            if(this.exploredNode.getF() < this.opened.get(searchOpenedNode(neighbourXPos, neighbourYPos)).getG()){
+                                System.out.println("Yei");
+                            }
+                            //Check if neighbour node f is less or equal than g
+                            //if it is open the node again and set as parent of it
+                            //Check if is in closed to get it out
+                                //Add node to opened
+                        }                        
                     }
                 }
             }
@@ -102,14 +117,25 @@ public class PathFinder {
         }
     }
 
+    public void showPath(Node lastNode){
+        Node n = lastNode;
+
+        if(n == null){
+            return;
+        }
+
+        while(n.getParent() != null){
+            path.add(n);
+            n = n.getParent();
+        }
+        path.add(n);
+    }
+
     public boolean calculateMove(int xPos, int yPos){
         //Checks if coordinates are inside the grid also check if is in close
         if(xPos >= 0 && xPos <= this.gWidth - this.size && yPos >= 0 && yPos <= this.gHeight - this.size){
             // System.out.println((neighborXPos + " " + neighborYPos);
-            int indexBorder = searchBorder(xPos, yPos);
-            int indexClosed = searchClosedNode(xPos, yPos);
-            int indexOpened = searchOpenedNode(xPos, yPos);
-            if(indexBorder == -1 && indexClosed == -1 && indexOpened == -1){ //is not a block or in closed list
+            if(searchBorder(xPos, yPos) == -1 && searchClosedNode(xPos, yPos) == -1){ //is not a block or in closed list
                 return true;
             }
         }
@@ -192,5 +218,13 @@ public class PathFinder {
 			}
 		}
 		return index;
+    }
+
+    public boolean getPathFound(){
+        return this.pathFound;
+    }
+
+    public void setPathFound(boolean pathFound){
+        this.pathFound = pathFound;
     }
 }
