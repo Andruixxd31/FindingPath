@@ -1,7 +1,9 @@
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -9,12 +11,9 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.util.ArrayList;
 import java.util.Random;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
+
 
 public class Grid extends JPanel implements ActionListener, MouseListener, MouseMotionListener, KeyListener {
 
@@ -43,7 +42,7 @@ public class Grid extends JPanel implements ActionListener, MouseListener, Mouse
         //Setting variables
         this.size = 25;
         random = new Random();
-        this.startNode = new Node(25,25);
+        this.startNode = new Node(50,50);
         this.endNode = new Node(400,400);
 
 
@@ -51,7 +50,7 @@ public class Grid extends JPanel implements ActionListener, MouseListener, Mouse
 		frame = new JFrame();
 		frame.setContentPane(this);
 		frame.setTitle("A* Pathfinding");
-		frame.getContentPane().setPreferredSize(new Dimension(900, 900));
+		frame.getContentPane().setPreferredSize(new Dimension(700, 600));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
 		frame.setLocationRelativeTo(null);
@@ -131,10 +130,10 @@ public class Grid extends JPanel implements ActionListener, MouseListener, Mouse
             Node current = pathFinder.getClosed().get(i);
             g.setFont(style.numbers);
             g.setColor(Color.black);
-            g.drawString(Integer.toString(current.getF()), current.getX() + 2, current.getY() + 6);
+            g.drawString(Integer.toString(current.getF()), current.getX() + 2, current.getY() + 8);
             g.setFont(style.smallNumbers);
             g.drawString(Integer.toString(current.getG()), current.getX() + 2, current.getY() + size - 3);
-            g.drawString(Integer.toString(current.getH()), current.getX() + size - 13, current.getY() + size - 3);
+            g.drawString(Integer.toString(current.getH()), current.getX() + size - 10, current.getY() + size - 3);
         }
         
         //Opened nodes
@@ -142,10 +141,10 @@ public class Grid extends JPanel implements ActionListener, MouseListener, Mouse
             Node current = pathFinder.getOpened().get(i);
             g.setFont(style.numbers);
             g.setColor(Color.black);
-            g.drawString(Integer.toString(current.getF()), current.getX() + 2, current.getY() + 6);
+            g.drawString(Integer.toString(current.getF()), current.getX() + 2, current.getY() + 8);
             g.setFont(style.smallNumbers);
             g.drawString(Integer.toString(current.getG()), current.getX() + 2, current.getY() + size - 3);
-            g.drawString(Integer.toString(current.getH()), current.getX() + size - 13, current.getY() + size - 3);
+            g.drawString(Integer.toString(current.getH()), current.getX() + size - 10, current.getY() + size - 3);
         }
 
         //Path
@@ -153,10 +152,10 @@ public class Grid extends JPanel implements ActionListener, MouseListener, Mouse
             Node current = pathFinder.getPathList().get(i);
             g.setFont(style.numbers);
             g.setColor(Color.black);
-            g.drawString(Integer.toString(current.getF()), current.getX() + 2, current.getY() + 6);
+            g.drawString(Integer.toString(current.getF()), current.getX() + 2, current.getY() + 8);
             g.setFont(style.smallNumbers);
             g.drawString(Integer.toString(current.getG()), current.getX() + 2, current.getY() + size - 3);
-            g.drawString(Integer.toString(current.getH()), current.getX() + size - 13, current.getY() + size - 3);
+            g.drawString(Integer.toString(current.getH()), current.getX() + size - 10, current.getY() + size - 3);
         }
     }
 

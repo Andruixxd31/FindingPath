@@ -2,7 +2,7 @@ import java.awt.Color;
 import java.awt.Font;
 
 public @interface style {
-	Font numbers = new Font("arial", Font.BOLD, 6);
+	Font numbers = new Font("arial", Font.BOLD, 8);
 	Font smallNumbers = new Font("arial", Font.PLAIN, 6);
 	Color greenHighlight = new Color(132, 255, 138);
 	Color redHighlight = new Color(253, 90, 90);
