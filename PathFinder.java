@@ -118,10 +118,6 @@ public class PathFinder {
 
     public void showPath(){
         Node childNode = endNode;
-        if(childNode == null){
-            return;
-        }
-
         while(childNode.getParent() != null){
             path.add(childNode);
             childNode = childNode.getParent();

@@ -2,10 +2,8 @@ import java.awt.Color;
 import java.awt.Font;
 
 public @interface style {
-	Font bigText = new Font("arial", Font.BOLD, 24);
-	Font REALBIGText = new Font("arial", Font.BOLD, 72);
-	Font numbers = new Font("arial", Font.BOLD, 12);
-	Font smallNumbers = new Font("arial", Font.PLAIN, 11);
+	Font numbers = new Font("arial", Font.BOLD, 6);
+	Font smallNumbers = new Font("arial", Font.PLAIN, 6);
 	Color greenHighlight = new Color(132, 255, 138);
 	Color redHighlight = new Color(253, 90, 90);
 	Color blueHighlight = new Color(32, 233, 255);
