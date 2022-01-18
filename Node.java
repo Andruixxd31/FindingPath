@@ -1,106 +1,77 @@
 public class Node{
 
-    int transitionCost; //Cost to go the node
-    int hCost; //hueristic cost
-    int gCost; //Cost from origin
-    int fCost; //sum of g and h
-    Node up; //Reference to the neighboring nodes
-    Node down;
-    Node left;
-    Node right;
+    private int x;
+    private int y;
+    private int h; //hueristic cost
+    private int g; //Cost from origin
+    private int f; //sum of g and h
+    private Node parent;
+	
+	public Node(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
 
-    public Node(int transitionCost){
-        this(transitionCost, null, null, null, null);
+    public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+    public int getG(){
+        return this.g;
     }
 
-    public Node(int transitionCost, Node up, Node down, Node left, Node right){
-        this.transitionCost = transitionCost;
-        this.up = up;
-        this.down = down;
-        this.left = left;
-        this.right = right;
+    public void setG(int gCost){
+        this.g = gCost;
     }
 
-    public int getTransitionCost(){
-        return this.transitionCost;
+    public int getH(){
+        return this.h;
     }
 
-    public void setTransitionCost(int transitionCost){
-        this.transitionCost = transitionCost;
+    public void setH(int hCost){
+        this.h = hCost;
     }
 
-    public int getGCost(){
-        return this.gCost;
+    public int getF(){
+        return this.f;
     }
 
-    public void setGCost(int gCost){
-        this.gCost = gCost;
+    public void setF(int fCost){
+        this.f = fCost;
     }
 
-    public int getHCost(){
-        return this.hCost;
-    }
+    public Node getNode() {
+		return parent;
+	}
+	
+	public Node getParent() {
+		return parent;
+	}
 
-    public void setHCost(int hCost){
-        this.hCost = hCost;
-    }
+    public void setParent(Node parent) {
+		this.parent = parent;
+	}
 
-    public int getFCost(){
-        return this.fCost;
-    }
+    public void setXY(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
 
-    public void setFCost(int fCost){
-        this.fCost = fCost;
-    }
+    public static boolean isEqual(Node s, Node e) {
+		if (s.getX() == e.getX() && s.getY() == e.getY()) {
+			return true;
+		}
+		return false;
+	}
 
-    public Node getUp(){
-        return this.up;
-    }
+    // @Override
+    // public String toString() {
 
-    public void setUp(Node up) {
-        this.up = up;
-    }
-
-    public Node getDown(){
-        return this.down;
-    }
-
-    public void setDown(Node down) {
-        this.down = down;
-    }
-
-    public Node getLeft(){
-        return this.left;
-    }
-
-    public void setLeft(Node left) {
-        this.left = left;
-    }
-
-    public Node getRight(){
-        return this.right;
-    }
-
-    public void setRight(Node right) {
-        this.right = right;
-    }
-
-    @Override
-    public String toString() {
-        return this.transitionCost + "";
-    }
+    // }
 
 
-    public static void main(String[] args) {
-        Node one = new Node(10);
-        Node two = new Node(20);
-        Node three = new Node(30);
-        Node four = new Node(40);
-        Node test = new Node(50, one, two, three, four);
-        Node test2 = new Node(60);
-        two.setUp(test);
-        System.out.println(test.toString());
-        test2.setUp(two);
-        System.out.println(test2.getUp().up.left);        
-    }
 }
