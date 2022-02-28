@@ -5,7 +5,7 @@ Interactive visual representation of pathfinding algorithm made in Java
 <h2>Execute Program</h2>
 Compile the Grid.java file and run it with "java Grid"
 
-#img - starting grid
+<img src="imgs/clean.png"/>
 
 <h2>Usage</h2>
 <ul>
@@ -19,5 +19,11 @@ Compile the Grid.java file and run it with "java Grid"
   <li>Press 2 to 6 to generate specific cases</li>
 </ul>
 
-#img - set up of case
-#img - set up for case completed
+<h2>Examples of program</h2>
+<img src="imgs/case1.png"/>
+
+<img src="imgs/case1s.png"/>
+
+<img src="imgs/case2s.png"/>
+
+<img src="imgs/case3s.png"/>
